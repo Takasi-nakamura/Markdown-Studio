@@ -1,4 +1,4 @@
-/* 軽量Markdownパーサー（外部ライブラリなし＝オフラインでも動作） */
+/* 軽量Markdownパーサー。コードの色付けはプレビューでhighlight.jsを使用。 */
 const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const safe = u => /^\s*(javascript|vbscript):/i.test(u) ? '#' : u;
 
@@ -21,9 +21,10 @@ function md(text) {
   while (i < L.length) {
     const l = L[i]; let m;
     if (/^```/.test(l)) {
+      const lang = l.slice(3).trim().split(/\s+/, 1)[0].toLowerCase().replace(/[^a-z0-9_+-]/g, '');
       const b = []; i++;
       while (i < L.length && !/^```/.test(L[i])) b.push(L[i++]);
-      i++; o.push('<pre><code>' + esc(b.join('\n')) + '</code></pre>');
+      i++; o.push('<pre><code' + (lang ? ' class="language-' + lang + '"' : '') + '>' + esc(b.join('\n')) + '</code></pre>');
     } else if ((m = l.match(/^(#{1,6})\s+(.*)/))) {
       o.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); i++;
     } else if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(l)) {

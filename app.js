@@ -63,7 +63,13 @@ function setTab(t) {
 }
 document.querySelectorAll('#edTabs button').forEach(b => b.onclick = () => setTab(b.dataset.tab));
 let renderT;
-function render() { clearTimeout(renderT); renderT = setTimeout(() => { pv.innerHTML = md(src.value); }, 100); }
+function render() {
+  clearTimeout(renderT);
+  renderT = setTimeout(() => {
+    pv.innerHTML = md(src.value);
+    if (window.hljs) pv.querySelectorAll('pre code').forEach(block => window.hljs.highlightElement(block));
+  }, 100);
+}
 
 /* ---------- 挿入 ---------- */
 function insert(tpl, from, to) {
@@ -237,9 +243,12 @@ addEventListener('afterprint', () => { document.title = oldTitle; });
 function setTheme(m) {
   ls.put('ms-theme', m); applyTheme(m);
   document.querySelectorAll('#themeSeg button').forEach(b => b.classList.toggle('active', b.dataset.t === m));
+  const light = document.documentElement.dataset.theme === 'light';
+  const darkTheme = $('hljs-dark'), lightTheme = $('hljs-light');
+  if (darkTheme && lightTheme) { darkTheme.disabled = light; lightTheme.disabled = !light; }
 }
 document.querySelectorAll('#themeSeg button').forEach(b => b.onclick = () => setTheme(b.dataset.t));
-matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => { if (ls.raw('ms-theme') === 'system') applyTheme('system'); });
+matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => { if (ls.raw('ms-theme') === 'system') setTheme('system'); });
 setTheme(ls.raw('ms-theme') || 'dark');
 
 /* ---------- 起動 ---------- */
