@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MD Studio">
+<title>Markdown Studio</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<script src="theme.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;600;700&family=WDXL+Lubrifont+JP+N&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>window.lucide=window.lucide||{createIcons:function(){}};</script>
+
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div class="app">
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">
+      <i data-lucide="notebook-pen"></i>
+    </div>
+    <span class="logo-name">Markdown Studio</span>
+  </div>
+  <div class="header-label">YOUR CREATIVE WORKSPACE</div>
+</header>
+
+<!-- PROJECTS -->
+
+<section class="page active" id="projects">
+
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">WORKSPACE</div>
+      <h1 class="page-title">プロジェクト</h1>
+      <p class="page-description">アイデアを整理して、形にしましょう。</p>
+    </div>
+
+    <button class="primary-btn" onclick="openCreateModal()">
+      <i data-lucide="plus" size="16"></i>
+      新規作成
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <div class="search">
+      <i data-lucide="search" size="16"></i>
+      <input
+        id="searchInput"
+        placeholder="プロジェクトを検索..."
+        oninput="filterProjects()">
+    </div>
+  </div>
+
+  <div class="project-section">
+    <div class="section-label">最近のプロジェクト</div>
+    <div class="project-grid" id="projectGrid"></div>
+  </div>
+
+</section>
+
+<!-- EDITOR -->
+
+<section class="page" id="editor">
+
+  <div class="ed-bar">
+    <button class="back-btn" onclick="showPage('projects')" aria-label="プロジェクト一覧">
+      <i data-lucide="arrow-left" size="16"></i>一覧
+    </button>
+    <div class="ed-title" id="editorTitle" title="タップで名前を変更">Untitled</div>
+    <div class="tools">
+      <button class="soft-btn" id="snipToggle" title="スニペット" aria-label="スニペット"><i data-lucide="sticky-note" size="16"></i></button>
+      <button class="soft-btn" id="dlBtn" title="Markdownをダウンロード" aria-label="ダウンロード"><i data-lucide="download" size="16"></i></button>
+      <button class="soft-btn" id="pdfBtn" title="PDF印刷" aria-label="PDF印刷"><i data-lucide="printer" size="16"></i></button>
+    </div>
+  </div>
+
+  <div class="ed-tabs">
+    <div class="tabs" id="edTabs">
+      <button data-tab="edit" class="active"><i data-lucide="pen-line" size="14"></i>編集</button>
+      <button data-tab="preview"><i data-lucide="eye" size="14"></i>プレビュー</button>
+    </div>
+  </div>
+
+  <div class="ws" id="ws" data-tab="edit">
+    <div class="pane" id="edPane">
+      <div class="predict" id="predict" aria-label="予測変換"></div>
+      <textarea id="src" spellcheck="false" autocapitalize="off" autocomplete="off"
+        placeholder="ここに書きます。「!」で記法・スニペットの一覧が開きます"></textarea>
+    </div>
+    <div class="pane" id="pvPane"><div class="pv md" id="pv"></div></div>
+  </div>
+
+</section>
+
+<!-- SETTINGS -->
+
+<section class="page" id="settings">
+
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">PREFERENCES</div>
+      <h1 class="page-title">設定</h1>
+      <p class="page-description">アプリの環境をカスタマイズします。</p>
+    </div>
+  </div>
+
+  <div class="section-label">一般</div>
+
+  <div class="settings-list">
+
+    <div class="setting-item">
+      <div class="setting-left">
+        <div class="setting-icon"><i data-lucide="palette"></i></div>
+        <div>
+          <div class="setting-title">外観</div>
+          <div class="setting-sub">アプリのテーマ</div>
+        </div>
+      </div>
+      <div class="tabs" id="themeSeg"><button data-t="dark">Dark</button><button data-t="light">Light</button><button data-t="system">Auto</button></div>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-left">
+        <div class="setting-icon"><i data-lucide="type"></i></div>
+        <div>
+          <div class="setting-title">フォント</div>
+          <div class="setting-sub">エディタのフォント設定</div>
+        </div>
+      </div>
+      <div class="setting-value">Default　›</div>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-left">
+        <div class="setting-icon"><i data-lucide="keyboard"></i></div>
+        <div>
+          <div class="setting-title">ショートカット</div>
+          <div class="setting-sub">キーボード操作</div>
+        </div>
+      </div>
+      <div class="setting-value">›</div>
+    </div>
+
+  </div>
+
+  <div style="height:30px"></div>
+
+  <div class="section-label">アプリについて</div>
+
+  <div class="settings-list">
+    <div class="setting-item">
+      <div class="setting-left">
+        <div class="setting-icon"><i data-lucide="info"></i></div>
+        <div>
+          <div class="setting-title">Markdown Studio</div>
+          <div class="setting-sub">Version 0.3.0 PWA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</div>
+
+<!-- NAVIGATION -->
+
+<nav class="nav-wrap" id="navWrap">
+  <div class="nav-inner">
+
+    <button class="nav-item active"
+      data-page="projects"
+      title="プロジェクト"
+      aria-label="プロジェクト">
+      <i data-lucide="layout-grid"></i>
+    </button>
+
+    <button class="nav-item"
+      data-page="create"
+      title="作成"
+      aria-label="作成">
+      <i data-lucide="plus-circle"></i>
+    </button>
+
+    <button class="nav-item"
+      data-page="settings"
+      title="設定"
+      aria-label="設定">
+      <i data-lucide="settings-2"></i>
+    </button>
+
+    <button class="nav-handle" id="navHandle"
+      aria-label="ナビゲーションを展開">
+      <i data-lucide="grip"></i>
+    </button>
+
+  </div>
+</nav>
+
+<!-- CREATE MODAL -->
+
+<div class="modal-overlay" id="createModal">
+  <div class="modal">
+
+    <div class="modal-icon">
+      <i data-lucide="file-plus-2"></i>
+    </div>
+
+    <h2>新しいプロジェクト</h2>
+    <p class="modal-desc">
+      新しいアイデアを書き始めましょう。<br>
+      プロジェクト名を入力してください。
+    </p>
+
+    <label class="input-label" for="projectName">プロジェクト名</label>
+    <input class="modal-input" id="projectName"
+      placeholder="例：My First Project"
+      maxlength="50">
+
+    <div class="modal-actions">
+      <button class="cancel-btn" onclick="closeModal()">キャンセル</button>
+      <button class="modal-submit" onclick="createProject()">作成する</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- RENAME MODAL -->
+
+<div class="modal-overlay" id="renameModal">
+  <div class="modal">
+
+    <div class="modal-icon">
+      <i data-lucide="pencil"></i>
+    </div>
+
+    <h2>名前を変更</h2>
+    <p class="modal-desc">新しいプロジェクト名を入力してください。</p>
+
+    <label class="input-label" for="renameInput">プロジェクト名</label>
+    <input class="modal-input" id="renameInput" maxlength="50">
+
+    <div class="modal-actions">
+      <button class="cancel-btn" onclick="closeRenameModal()">キャンセル</button>
+      <button class="modal-submit" onclick="saveRename()">変更する</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+
+    <div class="modal-icon"
+      style="background:rgba(255,90,105,.12);color:#ff737d">
+      <i data-lucide="trash-2"></i>
+    </div>
+
+    <h2>プロジェクトを削除</h2>
+    <p class="modal-desc">
+      「<span id="deleteTargetName"></span>」を削除しますか？<br>
+      この操作は取り消せません。
+    </p>
+
+    <div class="modal-actions">
+      <button class="cancel-btn" onclick="closeDeleteModal()">キャンセル</button>
+      <button class="danger-btn" onclick="confirmDelete()">削除する</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAGIC KEY BOTTOM SHEET -->
+<div class="sheet-back" id="sheetBack"></div>
+<div class="sheet" id="sheet" role="dialog" aria-label="予測変換の一覧">
+  <div class="grip"></div>
+  <input class="sheet-q" id="sheetQ" placeholder="絞り込み…" autocomplete="off">
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<!-- SNIPPETS (floating) -->
+<aside class="snip" id="snip" hidden>
+  <div class="snip-head" id="snipHead">
+    <i data-lucide="grip-vertical" width="14" height="14"></i><span>スニペット</span>
+    <button id="snipFold" aria-label="折り畳み"><i data-lucide="chevron-down" class="fold-i" width="16" height="16"></i></button>
+  </div>
+  <div class="snip-body" id="snipBody">
+    <div id="snipList"></div>
+    <button class="soft-btn snip-add" id="snipAdd"><i data-lucide="plus" width="14" height="14"></i>追加</button>
+  </div>
+</aside>
+
+<!-- SNIPPET MODAL -->
+<div class="modal-overlay" id="snipModal">
+  <div class="modal">
+    <div class="modal-icon"><i data-lucide="sticky-note"></i></div>
+    <h2>スニペットを追加</h2>
+    <p class="modal-desc">内容の <b>$0</b> の位置にカーソルが入ります。</p>
+    <label class="input-label" for="snName">名前</label>
+    <input class="modal-input" id="snName" maxlength="30">
+    <label class="input-label" for="snBody">内容</label>
+    <textarea class="modal-input" id="snBody" rows="5"></textarea>
+    <div class="modal-actions">
+      <button class="cancel-btn" id="snCancel">キャンセル</button>
+      <button class="modal-submit" id="snSave">追加する</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT -->
+<div class="md" id="printRoot"></div>
+
+<script src="core.js"></script>
+<script src="md.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

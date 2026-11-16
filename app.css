@@ -1,0 +1,98 @@
+/* ===== テーマ（黒基調 / ライト） ===== */
+:root{--bg:#000;--surface:#0b0b0d;--surface-2:#141417;--surface-3:#1f1f23;--text:#f5f5f7;--sub:#8e8e98;--border:rgba(255,255,255,.09);--accent:#cfcbff;--accent-soft:rgba(207,203,255,.12);--accent-fill:#cfcbff;--shadow:0 12px 40px rgba(0,0,0,.5);--pop:#121215;--input:#050506;--ink:#f2f2f7;--ink-on:#0b0b0e;--nav:rgba(18,18,21,.9);--nav-line:rgba(255,255,255,.1);--nav-shadow:rgba(0,0,0,.7)}
+[data-theme=light]{color-scheme:light;--bg:#fff;--surface:#fff;--surface-2:#f7f7f8;--surface-3:#eeeef0;--text:#111114;--sub:#6b6b75;--border:rgba(0,0,0,.09);--accent:#4a41d8;--accent-soft:rgba(0,0,0,.045);--accent-fill:#fff;--shadow:0 10px 32px rgba(0,0,0,.07);--pop:#fff;--input:#f7f7f8;--ink:#111114;--ink-on:#fff;--nav:rgba(255,255,255,.96);--nav-line:rgba(0,0,0,.08);--nav-shadow:rgba(0,0,0,.12)}
+.project-card:hover{background:var(--surface-2)}
+.context-menu,.modal{background:var(--pop)}
+.modal-input{background:var(--input)}
+textarea.modal-input{resize:vertical;line-height:1.7}
+.logo-mark,.primary-btn,.modal-submit{background:var(--ink);color:var(--ink-on)}
+.primary-btn:hover{background:var(--accent-fill);color:var(--text)}
+.nav-wrap,.nav-wrap.expanded{background:var(--nav);border-color:var(--nav-line);box-shadow:0 12px 45px var(--nav-shadow)}
+.nav-item.preview{color:var(--text);background:var(--surface-3)}
+
+/* ===== エディター ===== */
+.app.wide{max-width:1400px}
+.app.wide .header{display:none}
+.ed-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ed-title{flex:1;min-width:0;text-align:center;font-size:14px;font-weight:700;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tools{display:flex;gap:8px}
+.soft-btn.on{color:var(--text);border-color:var(--accent)}
+.tabs{display:inline-flex;gap:2px;padding:3px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px}
+.tabs button{background:transparent;color:var(--sub);padding:8px 16px;border-radius:9px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px}
+.tabs button.active{background:var(--ink);color:var(--ink-on)}
+.setting-item .tabs button{padding:7px 11px}
+.ed-tabs{margin-bottom:14px}
+.ws{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.pane{display:flex;flex-direction:column;min-width:0;height:calc(100dvh - 285px);min-height:360px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow)}
+.ws[data-tab=edit] #pvPane,.ws[data-tab=preview] #edPane{display:none}
+.predict{display:flex;gap:8px;flex-shrink:0;overflow-x:auto;padding:12px 14px;border-bottom:1px solid var(--border);scrollbar-width:none}
+.predict::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;white-space:nowrap;background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:11px}
+.chip:hover{border-color:var(--accent)}
+.chip small{margin-left:6px;font-size:9px;color:var(--sub)}
+#src{flex:1;min-height:0;width:100%;resize:none;border:0;outline:0;background:transparent;color:var(--text);font:16px/1.85 ui-monospace,SFMono-Regular,Menlo,Consolas,'M PLUS Rounded 1c',monospace;padding:22px 26px;tab-size:2}
+.pv{flex:1;overflow:auto;padding:34px 40px}
+@media(min-width:768px){
+  .ws,.ws[data-tab]{grid-template-columns:1fr 1fr}
+  .ws[data-tab] #pvPane,.ws[data-tab] #edPane{display:flex}
+  .ed-tabs{display:none}
+  .pane{height:calc(100dvh - 235px)}
+}
+
+/* プレビュー本文 */
+.md{font-size:14px;line-height:1.95;overflow-wrap:anywhere}
+.md>:first-child{margin-top:0}
+.md h1,.md h2,.md h3,.md h4,.md h5,.md h6{line-height:1.4;margin:1.6em 0 .6em}
+.md h1{font-size:28px}.md h2{font-size:22px;padding-bottom:.3em;border-bottom:1px solid var(--border)}.md h3{font-size:17px}
+.md p,.md ul,.md ol,.md pre,.md blockquote,.md .tw{margin:0 0 1em}
+.md ul,.md ol{padding-left:1.5em}
+.md li.task{list-style:none;margin-left:-1.3em}
+.md code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface-2);padding:.15em .4em;border-radius:6px}
+.md pre{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:16px;overflow:auto}
+.md pre code{background:none;padding:0}
+.md blockquote{border-left:3px solid var(--accent);padding:2px 16px;color:var(--sub)}
+.md a{color:var(--accent)}.md img{max-width:100%;border-radius:10px}
+.md hr{border:0;border-top:1px solid var(--border);margin:2em 0}
+.md .tw{overflow-x:auto}.md table{border-collapse:collapse;width:100%}
+.md th,.md td{border:1px solid var(--border);padding:8px 12px;text-align:left}.md th{background:var(--surface-2)}
+
+/* ボトムシート（マジックキー） */
+.sheet-back{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s}
+.sheet-back.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;max-height:70dvh;z-index:130;display:flex;flex-direction:column;background:var(--pop);border:1px solid var(--border);border-radius:24px 24px 0 0;padding:10px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -20px 60px rgba(0,0,0,.4);transform:translateY(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+.sheet.show{transform:none}
+.grip{width:38px;height:4px;margin:0 auto 12px;border-radius:4px;background:var(--surface-3)}
+.sheet-q{width:100%;border:1px solid var(--border);background:var(--input);color:var(--text);border-radius:12px;padding:11px 13px;font-size:16px;outline:0;margin-bottom:4px}
+.sheet-q:focus{border-color:var(--accent)}
+.sheet-body{overflow:auto}
+.sheet h4{font-size:10px;letter-spacing:1.5px;color:var(--sub);margin:14px 0 8px}
+.grid{display:flex;flex-wrap:wrap;gap:8px}
+.sheet .chip{padding:10px 14px;font-size:12px}
+
+/* スニペット（ページ枠外のフローティング） */
+.snip{position:fixed;z-index:60;width:230px;background:var(--pop);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)}
+.snip[hidden]{display:none}
+.snip-head{display:flex;align-items:center;gap:8px;padding:10px 8px 10px 12px;cursor:grab;touch-action:none;user-select:none;font-size:11px;font-weight:700}
+.snip-head:active{cursor:grabbing}
+.snip-head span{flex:1}
+.snip-head button,.snip-row .del{width:28px;height:28px;flex-shrink:0;display:grid;place-items:center;background:transparent;color:var(--sub);border-radius:8px}
+.snip-head button:hover,.snip-row .del:hover{background:var(--surface-3);color:var(--text)}
+.fold-i{transition:transform .2s}.snip.fold .fold-i{transform:rotate(-90deg)}
+.snip.fold .snip-body{display:none}
+.snip-body{max-height:46vh;overflow:auto;padding:0 8px 8px}
+.snip-row{display:flex;gap:4px;margin-bottom:4px}
+.snip-row .use{flex:1;min-width:0;text-align:left;padding:10px;border-radius:10px;font-size:11px;background:var(--surface-2);color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.snip-row .use:hover{background:var(--surface-3)}
+.snip-add{width:100%;justify-content:center;margin-top:4px}
+
+/* PDF印刷 */
+#printRoot{display:none}
+@media print{
+  body>*:not(#printRoot){display:none!important}
+  html,body{background:#fff!important}
+  #printRoot{display:block!important;padding:0}
+  #printRoot,#printRoot *{color:#000!important;background:transparent!important;border-color:#bbb!important}
+  #printRoot pre,#printRoot code,#printRoot th{background:#f1f1f3!important}
+  #printRoot pre,#printRoot table,#printRoot img{break-inside:avoid}
+  @page{margin:16mm}
+}
